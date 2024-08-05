@@ -1,0 +1,57 @@
+/*create table for rooms details.*/
+
+create table rooms(room_id int AUTO_INCREMENT primary key,
+room_no varchar(20) not null,
+room_type varchar(50) not null,
+price_per_night decimal(10,2) not null,
+status varchar(50)not null,
+description text);
+
+/*create table for customer details.*/
+
+create table customers(customer_id int AUTO_INCREMENT primary key,
+first_name varchar(30)not null,
+last_name varchar(30)not null,
+email varchar(50)not null,
+phone_no varchar(20)not null,
+address text);
+
+/*create table for reservations details.*/
+
+create table reservations(reservation_id int AUTO_INCREMENT primary key,
+customer_id int not null,
+room_id int not null,
+check_in_date date not null,
+check_out_date date not null,
+total_amount decimal(10,2) not null,
+status varchar(50) not null,
+foreign key (customer_id) references customers(customer_id),
+foreign key (room_id) references rooms(room_id));
+
+/*create table for payment details.*/
+
+create table payment(payment_id int AUTO_INCREMENT primary key,
+reservation_id int not null,
+payment_date date not null,
+amount decimal(10,2) not null,
+payment_method varchar(20) not null,
+status varchar(50) not null,
+foreign key(reservation_id) references reservations(reservation_id));
+
+/*insert some random data into the data database.*/
+
+insert into rooms(room_no,room_type,price_per_night,status,description)
+values('205','single bed',1500.00,'booked','Room booked for attend wedding function.');
+
+insert into customers(first_name,last_name,email,phone_no,address)
+values('suresh','ramesh','sureshramesh@gmail.com','7654321098','chennai,tamilnadu');
+
+insert into reservations(customer_id,room_id,check_in_date,check_out_date,total_amount,status)
+values(1,1,'2023-10-24','2023-10-25',1500.00,'confirmed');
+
+insert into payment(reservation_id,payment_date, amount,payment_method, status)
+values(1,'2023-10-23',1500.00,'online','complete');
+
+/*get the output with query*/
+select * from reservations
+where reservation_id = 1;
